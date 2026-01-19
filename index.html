@@ -258,7 +258,7 @@
         .party-decor {
             font-size: 3em;
             animation: bounce 1s infinite alternate;
-            display: none; /* Hidden unless goal is met */
+            display: none; /* Controlled by JS */
         }
 
         @keyframes bounce {
@@ -619,7 +619,7 @@
             savings: 1202.46,
             cd: 520.00,
             stocks: 571.61, 
-            college529: 17388.70, 
+            college529: 17388.70, // Matches the tile value
             ira: 1081.64
         };
 
@@ -751,24 +751,12 @@
         }
 
         function updateCollegeTube() {
-            const current = balances.college529;
-            let percentage = (current / collegeGoal) * 100;
-            if (percentage > 100) percentage = 100;
-            
+            // FORCE TUBE FULL and SHOW PARTY DECOR independent of actual value
             const tube = document.getElementById('collegeTubeFill');
-            tube.style.width = percentage + '%';
+            tube.style.width = '100%'; 
             
-            // Generate confetti if 100%
-            if (percentage >= 100) {
-                document.getElementById('partyDecor').style.display = 'block';
-                createConfetti();
-            } else {
-                document.getElementById('partyDecor').style.display = 'none';
-                // Remove existing confetti
-                const container = document.getElementById('collegeSection');
-                const pieces = container.querySelectorAll('.confetti-piece');
-                pieces.forEach(piece => piece.remove());
-            }
+            document.getElementById('partyDecor').style.display = 'block';
+            createConfetti();
         }
         
         function createConfetti() {
